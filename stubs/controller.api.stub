@@ -1,0 +1,116 @@
+<?php
+
+namespace {{ namespace }};
+//$modelVar
+//ModelName
+
+use App\Models\ModelName;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ModelNameRequest;
+use App\Http\Resources\ModelNameResource;
+use App\Http\Resources\ModelNameCollection;
+
+class {{ class }} extends Controller
+{
+
+    public function __construct() {
+        $this->middleware('auth:api');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        try {
+            return new ModelNameCollection(ModelName::all()->where('created_by','=',Auth::id()));
+        } catch (\Throwable $th) {
+            Log::error('{{ class }}',
+                [
+                    'data'=>$request
+                ]);
+            return response()->json(['error'=>$th->getMessage()],500);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(ModelNameRequest $request)
+    {
+        try {
+            $modelVar = ModelName::create($request->validated());
+            return new ModelNameResource($modelVar);
+        } catch (\Throwable $th) {
+            Log::error('{{ class }}',
+                [
+                    'data'=>$request
+                ]);
+            return response()->json(['error'=>$th->getMessage()],500);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(ModelName $modelVar)
+    {
+        try {
+            $this->authorize('view',$modelVar);
+
+            return new ModelNameResource($modelVar);
+
+        } catch (\Throwable $th) {
+            Log::error('{{ class }}',
+                [
+                    'data'=>$modelVar
+                ]);
+            return response()->json(['error'=>$th->getMessage()],500);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(ModelNameRequest $request, ModelName $modelVar)
+    {
+        try {
+            $this->authorize('update',$modelVar);
+
+            $modelVar->update($request->validated());
+
+            return new ModelNameResource($request);
+
+        } catch (\Throwable $th) {
+            Log::error('{{ class }}',
+                [
+                    'data'=>$modelVar
+                ]);
+            return response()->json(['error'=>$th->getMessage()],500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(ModelName $modelVar)
+    {
+        try {
+            $this->authorize('delete',$modelVar);
+
+            $modelVar->update(['activo'=>0]);
+
+            return response()->json(['message'=>'Registro eliminado'],200);
+
+        } catch (\Throwable $th) {
+            Log::error('{{ class }}',
+                [
+                    'data'=>$modelVar
+                ]);
+            return response()->json(['error'=>$th->getMessage()],500);
+        }
+    }
+}
