@@ -17,7 +17,7 @@ return new class extends Migration
         $table = 'tblusuarios';
         $comments = 'Tabla de registros de usuarios';
         Schema::create($table, function (Blueprint $table) {
-            $table->id('id_usuario')->comment('Clave primaria');
+            $table->id()->comment('Clave primaria');
             $table->string('login')->comment('');
             $table->string('password')->comment('');
             $table->string('nombre')->comment('Nombre del Usuario');
