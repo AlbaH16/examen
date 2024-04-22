@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\GrupoSistema;
 use App\Models\User;
+use App\Models\Accion;
+use App\Models\GrupoSistema;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,6 +35,13 @@ class DatabaseSeeder extends Seeder
             $usuario->materno = 'Apellido Materno Usuario '.$i;
             $usuario->cve_grupo = $i > 7 ? 3 : rand(1,2);
             $usuario->save();
+        }
+
+        $acciones = ['Registro Solicitud','Eliminacion de solicitud'];
+        foreach ($acciones as $value) {
+            $accion = new Accion();
+            $accion->descripcion = $value;
+            $accion->save();
         }
     }
 }

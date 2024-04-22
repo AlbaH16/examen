@@ -18,6 +18,13 @@ class Solicitud extends Model
     protected $table = 'tblsolicitudes';
 
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id_solicitud';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

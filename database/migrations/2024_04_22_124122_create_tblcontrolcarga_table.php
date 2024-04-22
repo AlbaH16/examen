@@ -19,8 +19,8 @@ return new class extends Migration
         Schema::create($table, function (Blueprint $table) {
             $table->id('id_control_carga')->comment('Clave primaria');
             $table->foreignId('id_usuario')->comment('Clave foranea del usuario');
-            $table->tinyInteger('anio')->comment('Anio de la carga');
-            $table->total('total')->comment('Total de carga del usuario');
+            $table->smallInteger('anio')->comment('Anio de la carga');
+            $table->integer('total')->comment('Total de carga del usuario');
             $table->tinyInteger('activo',false,true)->comment('Estado del registro');
             $table->timestamps();
         });

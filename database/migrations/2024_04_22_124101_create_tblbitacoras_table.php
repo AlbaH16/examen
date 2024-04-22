@@ -20,6 +20,7 @@ return new class extends Migration
             $table->id('id_Bitacora')->comment('Primary key');
             $table->foreignId('id_Usuario')->comment('Clave foranea del usuario');
             $table->foreignId('cve_accion')->comment('Clave foranea de la accion');
+            $table->date('fecha')->comment('Fecha de registro de bitacora');
             $table->tinyInteger('activo',false,true)->comment('Estado del registro');
             $table->timestamps();
 

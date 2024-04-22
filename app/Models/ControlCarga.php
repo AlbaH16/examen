@@ -16,7 +16,12 @@ class ControlCarga extends Model
      * @var string
      */
     protected $table = 'tblcontrolcarga';
-
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id_control_carga';
     /**
      * The attributes that are mass assignable.
      *
@@ -35,6 +40,6 @@ class ControlCarga extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'other_key');
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 }
